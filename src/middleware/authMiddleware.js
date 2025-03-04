@@ -20,4 +20,14 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+//Middleware for role-based access control
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: 'Not authorized, forbidden' });
+    }
+    next();
+  };
+};
+
+module.exports = { protect, authorize };
