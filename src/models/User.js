@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       enum: ['admin', 'client'],
       default: 'client',
     },
+    permissions: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

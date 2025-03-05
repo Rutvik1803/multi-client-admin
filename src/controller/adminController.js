@@ -10,4 +10,23 @@ const getClients = async (req, res) => {
   }
 };
 
-module.exports = { getClients };
+// Update the persmissions array of a client (Admin Only)
+const updatePermissions = async (req, res) => {
+  try {
+    const { permissions } = req.body;
+    const client = await User.findById(req.params.id);
+
+    if (!client) {
+      return res.status(404).json({ message: 'Client not found' });
+    }
+
+    client.permissions = permissions;
+    await client.save();
+
+    res.status(200).json({ message: 'Permissions updated successfully ' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { getClients, updatePermissions };
